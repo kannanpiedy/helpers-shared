@@ -1,4 +1,4 @@
-# helpers-shared
+# SCIDBHELPER
 
 This contains 2 functions which can be accessed within the scidbhelper module as given below.
 Build Literal : formulate_build_literal_query
