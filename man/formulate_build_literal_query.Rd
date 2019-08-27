@@ -18,7 +18,7 @@ formulate_build_literal_query(vec, value_name = "value_id",
 a string to use as the input query for scidb
 }
 \description{
-Code to build a query for sciDB call from the given vec input.
+Code to build a query for sciDB call from the given vector input.
 formulate_build_literal_query is a function that can be used to create an input query for the
 AFL
 }

@@ -9,15 +9,15 @@ formulate_equi_join_query(left_array_or_query, right_array_or_query,
   keep_dimensions = TRUE)
 }
 \arguments{
-\item{left_array_or_query}{first array to be joined}
+\item{left_array_or_query}{first array or query to be joined}
 
-\item{right_array_or_query}{second array to be joined}
+\item{right_array_or_query}{second array or query to be joined}
 
-\item{keep_dimensions}{whether to maintain the dimension ratio of the array}
+\item{keep_dimensions}{whether to maintain the dimensions of the arrays}
 
-\item{left_fields_to_join}{the fields from the first array on which to join}
+\item{left_fields_to_join}{the fields from the first array or query on which to join}
 
-\item{right_fields_to_join}{the fields from the second array on which to join}
+\item{right_fields_to_join}{the fields from the second array or query on which to join}
 }
 \value{
 returns the query string for performing equijoin in scidb

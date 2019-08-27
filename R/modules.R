@@ -76,11 +76,11 @@ formulate_base_selection_query = function(idname, id){
 #' Equijoin query for scidb
 #'
 #'equi-join query by taking parameters of both queries and field over which to join them.
-#'@param left_array_or_query first array to be joined
-#'@param right_array_or_query second array to be joined
-#'@param left_fields_to_join the fields from the first array on which to join
-#'@param right_fields_to_join the fields from the second array on which to join
-#'@param keep_dimensions whether to maintain the dimension ratio of the array
+#'@param left_array_or_query first array or query to be joined
+#'@param right_array_or_query second array or query to be joined
+#'@param left_fields_to_join the fields from the first array or query on which to join
+#'@param right_fields_to_join the fields from the second array or query on which to join
+#'@param keep_dimensions whether to maintain the dimensions of the arrays
 #'@return returns the query string for performing equijoin in scidb
 #'\describe{
 #'   The formulate_equi_join_query creates the equi join query to be used in scidb based on these parameters
@@ -95,4 +95,36 @@ formulate_equi_join_query = function(left_array_or_query, right_array_or_query, 
     ", 'right_names=", paste0(right_fields_to_join_by, collapse=","), "'",
     ifelse(keep_dimensions, ", 'keep_dimensions=true')", ", 'keep_dimensions=false')")
   )
+}
+
+
+#'Drop Columns with NA
+#'
+#'\describe{
+#'we've used two methods of handling it and the system handles dataframe of type data.table differently compared to others.
+#'}
+#'\enumerate{
+#'\item for the given dataframe we filter out those columns which are not NA and return the dataframe
+#'\item we choose whether to do splicing or using the Filter function based on the type of dataframe
+#'}
+#'@param df dataframe as an input
+#'@return returns a dataframe without those columns which have na values
+
+
+drop_na_columns = function(df){
+  if (nrow(df) > 0) {
+    if( "data.table" %in% class(df) |
+        (nrow(df) == 1 & ncol(df) == 1)) {
+      # Use a different method to remove NA columns if a data.table
+      # http://stackoverflow.com/questions/2643939/remove-columns-from-dataframe-where-all-values-are-na
+      base::Filter(function(x)
+        !all(is.na(x)),
+        df)
+
+    } else {
+      df[,colSums(is.na(df))<nrow(df)]
+    }
+  } else {
+    df
+  }
 }
