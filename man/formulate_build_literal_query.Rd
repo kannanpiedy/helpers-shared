@@ -2,11 +2,30 @@
 % Please edit documentation in R/modules.R
 \name{formulate_build_literal_query}
 \alias{formulate_build_literal_query}
-\title{Code to build a query for sciDB call from the given vec input.}
+\title{Build literal query}
 \usage{
 formulate_build_literal_query(vec, value_name = "value_id",
   index_name = "idx")
 }
+\arguments{
+\item{vec}{a vector}
+
+\item{value_name}{(optional) a name for the value to be given in the query string, by default it is \strong{value_id}}
+
+\item{index_name}{(optional) a default name for the index parameter in the scidb query , by default it is \strong{idx}}
+}
+\value{
+a string to use as the input query for scidb
+}
 \description{
 Code to build a query for sciDB call from the given vec input.
+formulate_build_literal_query is a function that can be used to create an input query for the
+AFL
+}
+\examples{
+formulate_build_literal_query(c(1,2,3,4))
+[1] "build(<value_id:int64>[idx=0:3], '[1,2,3,4]', true)"
+
+formulate_build_literal_query(c(1:5,8:10))
+[1] "build(<value_id:int64>[idx=0:7], '[1,2,3,4,5,8,9,10]', true)"
 }
